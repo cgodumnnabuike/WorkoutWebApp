@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using WorkoutWebApp.Data;
+using WorkoutWebApp.Models;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<WorkoutWebAppContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("WorkoutWebAppContext") ?? throw new InvalidOperationException("Connection string 'WorkoutWebAppContext' not found.")));
@@ -9,6 +10,13 @@ builder.Services.AddDbContext<WorkoutWebAppContext>(options =>
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    SeedData.Initialize(services);
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
