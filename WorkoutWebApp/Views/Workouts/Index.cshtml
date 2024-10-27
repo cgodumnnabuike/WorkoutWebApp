@@ -9,6 +9,21 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+.<div classs = "row">
+    @foreach (var item in Model)
+    {
+        <div class="card border-info mb-3" style="max-width: 20rem;">
+            <div class="card-header">Header</div>
+            <div class="card-body">
+                <h4 class="card-title">@Html.DisplayFor(modelItem => item.Exercise)</h4>
+                <p class="card-text">@Html.DisplayFor(modelItem => item.Notes)</p>
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+            </div>
+        </div>
+    }
+</div>
+
 <table class="table">
     <thead>
         <tr>
